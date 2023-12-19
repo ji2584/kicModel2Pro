@@ -35,7 +35,7 @@ public int insertMember(KicMember kicmem) throws UnsupportedEncodingException, S
       Connection conn = getConnection();
           
          PreparedStatement pstmt = conn.prepareStatement("insert into kicmember "
-                + "values (?,?,?,?,?,?, null)");
+                + "values (?,?,?,?,?,?,?)");
          //mapping
          pstmt.setString(1,kicmem.getId());
          pstmt.setString(2,kicmem.getPass());
@@ -43,6 +43,7 @@ public int insertMember(KicMember kicmem) throws UnsupportedEncodingException, S
          pstmt.setInt(4,kicmem.getGender());
          pstmt.setString(5,kicmem.getTel());
          pstmt.setString(6,kicmem.getEmail());
+         pstmt.setString(7,kicmem.getPicture());
          //4)excute
          int num = pstmt.executeUpdate();
          return num;
@@ -63,7 +64,8 @@ public KicMember oneMember(String id) throws SQLException {
 		m.setGender(rs.getInt("gender"));
 		m.setTel(rs.getString("tel"));
 		m.setEmail(rs.getString("email"));
-		return m;
+		m.setPicture(rs.getString("picture"));
+		return m;  
 	}
 	return null;
 }
@@ -71,14 +73,16 @@ public KicMember oneMember(String id) throws SQLException {
 public int UpdateMember(KicMember kicmem) throws UnsupportedEncodingException, SQLException {
     
     Connection conn = getConnection();
-        String sql = "Update kicmember set name=?,gender=?,tel=?,email=? where id=?";
+        String sql = "Update kicmember set name=?,gender=?,tel=?,email=? ,picture=? where id=?";
        PreparedStatement pstmt = conn.prepareStatement(sql);
        //mapping
        pstmt.setString(1,kicmem.getName());
        pstmt.setInt(2,kicmem.getGender());
        pstmt.setString(3,kicmem.getTel());
        pstmt.setString(4,kicmem.getEmail());
-       pstmt.setString(5,kicmem.getId());
+       pstmt.setString(5,kicmem.getPicture());
+       pstmt.setString(6,kicmem.getId());
+     
        //4)excute
        int num = pstmt.executeUpdate();
        return num;

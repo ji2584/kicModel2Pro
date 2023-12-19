@@ -15,7 +15,9 @@
             <h4 class="mb-3">회원정보</h4>
             <table class="table">
             <tr>   <th>정보</th><th>내용</th> </tr>
+             <tr><td>사진</td><td><img src="${pageContext.request.contextPath}/image/member/picture/${mem.picture }"></td><tr>
             <tr><td>id</td><td>${mem.id }</td><tr>
+        
             <tr><td>name</td><td>${mem.name }</td><tr>
             <tr><td>gender</td><td>${mem.gender }</td><tr>
             <tr><td>tel</td><td>${mem.tel }</td><tr>
@@ -24,11 +26,11 @@
         	<tr>
         	<td colspan="2" class = "w3-center">
         	<a class = "btn btn-primary"
-        	href = "${pageContext.request.contextPath}/chap08/memberUpdateForm.jsp">회원정보수정</a>
+        	href = "${pageContext.request.contextPath}/member/memberUpdateForm">회원정보수정</a>
            <a class = "btn btn-primary"
-        	href = "${pageContext.request.contextPath}/chap08/memberDeleteForm.jsp">회원탈퇴</a>
+        	href = "${pageContext.request.contextPath}/member/memberDeleteForm">회원탈퇴</a>
         	<a class = "btn btn-primary"
-        	href = "${pageContext.request.contextPath}/chap08/memberPassForm.jsp">비밀번호수정</a>
+        	href = "${pageContext.request.contextPath}/member/memberPassForm">비밀번호수정</a>
            </td>
            </tr>
            

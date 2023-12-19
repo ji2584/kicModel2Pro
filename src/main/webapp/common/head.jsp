@@ -15,7 +15,7 @@
 
 <nav class="navbar navbar-expand-sm bg-light navbar-light">
   <!-- Brand -->
-  <a class="navbar-brand" href="<%=request.getContextPath()%>/member/index.jsp"><img src="/kicModel2Pro/common/logo.png"  width="60%"></a>
+  <a class="navbar-brand" href="../member/index"><img src="/kicModel2Pro/common/logo.png"  width="60%"></a>
   <ul class="navbar-nav">
 <%
 request.setCharacterEncoding("utf-8");
