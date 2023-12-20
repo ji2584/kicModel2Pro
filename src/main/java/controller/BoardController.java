@@ -52,21 +52,21 @@ public class BoardController extends MskimRequestMapping {
 		System.out.println(board);
 		BoardDao bd = new BoardDao();
 		int num = bd.insertBoard(board);
+		if(num>0 ) {
+			msg="게시물 등록 성공";
+			url="/board/boardList";
+			
+		}
+		request.setAttribute("msg", msg);		
+		request.setAttribute("url", url);
 		
+		return "/WEB-INF/view/alert.jsp";   
 		
-		
-		
-		
-		System.out.println("===========");
-		request.setAttribute("msg","게시판이 입력되었습니다");
-		request.setAttribute("url", "/board/boardList");
-  	  	return"/WEB-INF/view/alert.jsp";
 
 	} 
 	 
 	
-	
-	
+	 
 	
 	
 	
