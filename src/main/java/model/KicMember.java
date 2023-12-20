@@ -20,7 +20,7 @@ picture varchar(200));
    private String tel;
    private String email;
    private String picture;
-   
+  
    public String getId() {
       return id;
    }
@@ -63,11 +63,19 @@ picture varchar(200));
    public void setPicture(String picture) {
       this.picture = picture;
    }
-   @Override
-   public String toString() {
-      return "kicMember [id=" + id + ", pass=" + pass + ", name=" + name + ", gender=" + gender + ", tel=" + tel
-            + ", email=" + email + ", picture=" + picture + "]";
-   }
-   
-   
+@Override
+public String toString() {
+	return "KicMember [id=" + id + ", pass=" + pass + ", name=" + name + ", gender=" + gender + ", tel=" + tel
+			+ ", email=" + email + ", picture=" + picture + "]";
 }
+   
+   
+  	
+
+	   
+   }
+
+
+
+
+

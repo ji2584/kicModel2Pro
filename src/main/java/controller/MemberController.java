@@ -3,6 +3,7 @@ package controller;
 import java.io.IOException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -11,18 +12,21 @@ import com.oreilly.servlet.MultipartRequest;
 
 import dao.MemberDao;
 import model.KicMember;
+import kic.mskim.Login;
 import kic.mskim.MskimRequestMapping;
 import kic.mskim.RequestMapping;
-
+@WebServlet("/member/*")
 public class MemberController extends MskimRequestMapping {
 	
 	HttpSession session;
 	
 
 	@Override
-	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		super.service(req, resp);
+		request.setCharacterEncoding("UTF-8");
+		this.session=request.getSession();
+		super.service(request, response);
 	}
 	
 	
@@ -43,11 +47,14 @@ public class MemberController extends MskimRequestMapping {
     
 			} 
 			
+			
+			
+			@Login(key = "id")//login확인 "id"
 			@RequestMapping("memberinfo")
 		      public String memberinfo(HttpServletRequest request, HttpServletResponse response) throws Exception {
 				
 				MemberDao md = new MemberDao();
-				HttpSession session = request.getSession();
+				
 				String login = (String)session.getAttribute("id");
 				KicMember mem = md.oneMember(login);
 				request.setAttribute("mem", mem);
@@ -78,7 +85,7 @@ public class MemberController extends MskimRequestMapping {
 
     		@RequestMapping("logout")
     					public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    				HttpSession session = request.getSession();
+    				
     				session.invalidate();
     				
     				
@@ -108,7 +115,7 @@ public class MemberController extends MskimRequestMapping {
     	String pass = request.getParameter("pass");
     	MemberDao md = new MemberDao();
     	KicMember mem = md.oneMember(id);
-    	HttpSession session = request.getSession();
+    	
     	String msg = "아이디를 확인하세요";
     	String url = "/member/loginForm";
     	if(mem !=null){
@@ -174,10 +181,10 @@ public class MemberController extends MskimRequestMapping {
     	
     	
     	
-    	
+    	@Login(key = "id")//login확인 "id"
 		@RequestMapping("memberUpdateForm")
 		public String memberUpdateForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
-	     HttpSession session = request.getSession();
+	     
 	     String login = (String)session.getAttribute("id");
 	     MemberDao md = new MemberDao();
 	     KicMember mem = md.oneMember(login);
@@ -197,7 +204,7 @@ public class MemberController extends MskimRequestMapping {
 	 	
 			@RequestMapping("memberUpdatePro")
 			public String memberUpdatePro(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		     HttpSession session = request.getSession();
+		     
 		     String login = (String)session.getAttribute("id");
 		    
 		     KicMember mem = new KicMember();//client에서 넘어온 자료
@@ -242,7 +249,7 @@ public class MemberController extends MskimRequestMapping {
 
 			@RequestMapping("memberDeleteForm")
 			public String memberDeleteForm(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		     HttpSession session = request.getSession();
+		     
 		     String login = (String)session.getAttribute("id");
 		     MemberDao md = new MemberDao();
 		     KicMember mem = md.oneMember(login);
@@ -261,7 +268,7 @@ public class MemberController extends MskimRequestMapping {
 			
 			@RequestMapping("memberDeletePro")
 			public String memberDeletePro(HttpServletRequest request, HttpServletResponse response) throws Exception {
-				HttpSession session = request.getSession();
+				
 				String login = (String)session.getAttribute("id");
 				String pass = request.getParameter("pass");
 				MemberDao md = new MemberDao();
@@ -311,7 +318,7 @@ public class MemberController extends MskimRequestMapping {
 			@RequestMapping("memberPassPro")
 			public String memberPassPro(HttpServletRequest request, HttpServletResponse response) throws Exception {
 				
-				HttpSession session=request.getSession();
+				
 				
 				String login = (String)session.getAttribute("id");
 				
