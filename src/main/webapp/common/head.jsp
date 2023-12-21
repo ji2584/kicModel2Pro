@@ -44,6 +44,7 @@
       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
         게시판
       </a>
+      
       <div class="dropdown-menu">
         <a class="dropdown-item" href="">공지사항</a>
         <a class="dropdown-item" href="">자유게시판</a>

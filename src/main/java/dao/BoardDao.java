@@ -6,9 +6,12 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import kic.mskim.RequestMapping;
 import model.Board;
 import model.KicMember;
 
@@ -44,8 +47,8 @@ public class BoardDao {
 	         pstmt.setString(3,board.getSubject());
 	         pstmt.setString(4,board.getContent());
 	         pstmt.setString(5,board.getFile1());
-	         pstmt.setString(6,board.getRegdate());
-	         pstmt.setString(7,board.getReadcnt());
+	         
+	         pstmt.setString(6,board.getBoardid());
 	         //4)excute
 	         int num = pstmt.executeUpdate();
 	         return num;
@@ -53,9 +56,72 @@ public class BoardDao {
 	   }
    
    
+   public List<Board> boardList() throws SQLException{
+	   Connection conn = getConnection();
+       
+       PreparedStatement pstmt = conn.prepareStatement("select * from Board");
+       ResultSet rs = pstmt.executeQuery();
+       List<Board> li = new ArrayList<>();
+       while(rs.next()) {
+    	   Board m = new Board();
+    	   m.setNum(rs.getInt("num"));
+    	
+   			m.setPass(rs.getString("pass"));
+   		   m.setName(rs.getString("name"));
+   			m.setSubject(rs.getString("subject"));
+   			m.setContent(rs.getString("content"));
+   			m.setFile1(rs.getString("file1"));
+   			m.setRegdate(rs.getDate("regdate"));
+   			m.setReadcnt(rs.getInt("readcnt"));
+   		    m.setBoardid(rs.getString("boardid"));
+   		    li.add(m);
+       }
    
+   return li;
    
+   }
    
+   @RequestMapping("oneBoard")////*****//board//index
+   public Board oneBoard(int num) throws Exception {
+	   Connection conn = getConnection();
+       PreparedStatement pstmt = conn.prepareStatement("select * from Board where num=?");
+       pstmt.setInt(1, num);
+       ResultSet rs = pstmt.executeQuery();
+       Board m = new Board();
+       if(rs.next()) {
+    	   m.setNum(rs.getInt("num"));
+    	   m.setName(rs.getString("name"));
+    	m.setPass(rs.getString("pass"));
+  		  	m.setSubject(rs.getString("subject"));
+  			m.setContent(rs.getString("content"));
+  			m.setFile1(rs.getString("file1"));
+  			m.setRegdate(rs.getDate("regdate"));
+  			m.setReadcnt(rs.getInt("readcnt"));
+  		    m.setBoardid(rs.getString("boardid"));
+       }
+       	
+       
+       return m;
+	} 
+	
+	
+   public int updateBoard(Board board) throws UnsupportedEncodingException, SQLException {
+       
+	      Connection conn = getConnection();
+	          
+	         PreparedStatement pstmt = conn.prepareStatement("Update board set name=?,subject=?,content=?,file1=?"
+	         		+ "  where num=? ")       ;
+	         //mapping
+	         pstmt.setString(1,board.getName());
+	         pstmt.setString(2,board.getSubject());
+	         pstmt.setString(3,board.getContent());
+	         pstmt.setString(4,board.getFile1());
+	         pstmt.setInt(5,board.getNum());
+	              //4)excute
+	         int num = pstmt.executeUpdate();
+	         return num;
+	                  
+	   }
    
    
    

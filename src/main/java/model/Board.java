@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Date;
+
 public class Board {
 		private int num;
 		private String name;
@@ -7,8 +9,8 @@ public class Board {
 	   private String subject;
 	   private String content; 
 	   private String file1;
-	   private String regdate ;
-	   private String readcnt ;
+	   private Date  regdate ;
+	   private  int  readcnt ;
 	   private String boardid ;
 	   
 	   
@@ -49,16 +51,16 @@ public class Board {
 		public void setFile1(String file1) {
 			this.file1 = file1;
 		}
-		public String getRegdate() {
+		public Date getRegdate() {
 			return regdate;
 		}
-		public void setRegdate(String regdate) {
+		public void setRegdate(Date regdate) {
 			this.regdate = regdate;
 		}
-		public String getReadcnt() {
+		public int getReadcnt() {
 			return readcnt;
 		}
-		public void setReadcnt(String readcnt) {
+		public void setReadcnt(int readcnt) {
 			this.readcnt = readcnt;
 		}
 		public String getBoardid() {
