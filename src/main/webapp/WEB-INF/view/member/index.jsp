@@ -7,9 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-
- member index 입니다.
-
+member index 입니다.
 </body>
 </html>

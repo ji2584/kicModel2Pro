@@ -7,9 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-
 board index 입니다.
-
 </body>
 </html>

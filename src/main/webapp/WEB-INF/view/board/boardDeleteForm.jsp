@@ -40,17 +40,12 @@ body {
 	<div class="container">
 		<div class="input-form-backgroud row">
 			<div class="input-form col-md-12 mx-auto">
-				<h4 class="mb-3  center">회원탈퇴</h4>
-				<form class="validation-form" novalidate action="memberDeletePro"
+				<h4 class="mb-3  center">게시물삭제</h4>
+				<form class="validation-form" novalidate action="boardDeletePro"
 				method="post">
-
+                     <input type="hidden" name="num" value="${num}">
 					<div class="row">
-						<div class="col-md-6 mb-3">
-							<label for="id">아이디</label> <input type="text"
-								class="form-control" id="id" value="${id}" readonly
-								name="id">
-							<div class="invalid-feedback">아이디를 입력해주세요.</div>
-						</div>
+					
 						<div class="col-md-6 mb-3">
 							<label for="pass">비밀번호</label> <input type="password"
 								class="form-control" id="pass" placeholder="" value=""
@@ -61,13 +56,10 @@ body {
 
 
 					<div class="mb-4"></div>
-					<button class="btn btn-primary btn-lg btn-block" type="submit">탈퇴</button>
+					<button class="btn btn-primary btn-lg btn-block" type="submit">삭제</button>
 				</form>
 			</div>
 		</div>
-		<footer class="my-3 text-center text-small">
-			<p class="mb-1">&copy; 2021 YD</p>
-		</footer>
 	</div>
 	<script> window.addEventListener('load', () => { const forms = document.getElementsByClassName('validation-form'); Array.prototype.filter.call(forms, (form) => { form.addEventListener('submit', function (event) { if (form.checkValidity() === false) { event.preventDefault(); event.stopPropagation(); } form.classList.add('was-validated'); }, false); }); }, false); </script>
 </body>

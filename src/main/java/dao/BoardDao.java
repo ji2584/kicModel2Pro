@@ -9,14 +9,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
-import kic.mskim.RequestMapping;
 import model.Board;
 import model.KicMember;
 
 public class BoardDao {
-   public Connection getConnection() {
+
+	 public Connection getConnection() {
          Connection conn = null;
          PreparedStatement pstmt = null;
 
@@ -34,95 +32,117 @@ public class BoardDao {
 
          return null;
       }
-   
-   public int insertBoard(Board board) throws UnsupportedEncodingException, SQLException {
-       
+	 
+	 public int insertBoard(Board board) throws UnsupportedEncodingException, SQLException {
+	      	
 	      Connection conn = getConnection();
 	          
-	         PreparedStatement pstmt = conn.prepareStatement("insert into Board "
-	                + "values (boardseq.nextval ,?,?,?,?,?,sysdate,0,?)");
+	         PreparedStatement pstmt = conn.prepareStatement("insert into board "
+	        		  + "values (boardseq.nextval,?,?,?,?,?,sysdate,0,?)");
 	         //mapping
 	         pstmt.setString(1,board.getName());
 	         pstmt.setString(2,board.getPass());
 	         pstmt.setString(3,board.getSubject());
 	         pstmt.setString(4,board.getContent());
 	         pstmt.setString(5,board.getFile1());
-	         
 	         pstmt.setString(6,board.getBoardid());
+	         
 	         //4)excute
 	         int num = pstmt.executeUpdate();
 	         return num;
 	                  
 	   }
-   
-   
-   public List<Board> boardList() throws SQLException{
-	   Connection conn = getConnection();
-       
-       PreparedStatement pstmt = conn.prepareStatement("select * from Board");
-       ResultSet rs = pstmt.executeQuery();
-       List<Board> li = new ArrayList<>();
-       while(rs.next()) {
-    	   Board m = new Board();
-    	   m.setNum(rs.getInt("num"));
-    	
-   			m.setPass(rs.getString("pass"));
-   		   m.setName(rs.getString("name"));
-   			m.setSubject(rs.getString("subject"));
-   			m.setContent(rs.getString("content"));
-   			m.setFile1(rs.getString("file1"));
-   			m.setRegdate(rs.getDate("regdate"));
-   			m.setReadcnt(rs.getInt("readcnt"));
-   		    m.setBoardid(rs.getString("boardid"));
-   		    li.add(m);
-       }
-   
-   return li;
-   
-   }
-   
-   @RequestMapping("oneBoard")////*****//board//index
-   public Board oneBoard(int num) throws Exception {
-	   Connection conn = getConnection();
-       PreparedStatement pstmt = conn.prepareStatement("select * from Board where num=?");
-       pstmt.setInt(1, num);
-       ResultSet rs = pstmt.executeQuery();
-       Board m = new Board();
-       if(rs.next()) {
-    	   m.setNum(rs.getInt("num"));
-    	   m.setName(rs.getString("name"));
-    	m.setPass(rs.getString("pass"));
-  		  	m.setSubject(rs.getString("subject"));
-  			m.setContent(rs.getString("content"));
-  			m.setFile1(rs.getString("file1"));
-  			m.setRegdate(rs.getDate("regdate"));
-  			m.setReadcnt(rs.getInt("readcnt"));
-  		    m.setBoardid(rs.getString("boardid"));
-       }
-       	
-       
-       return m;
-	} 
-	
-	
-   public int updateBoard(Board board) throws UnsupportedEncodingException, SQLException {
-       
-	      Connection conn = getConnection();
-	          
-	         PreparedStatement pstmt = conn.prepareStatement("Update board set name=?,subject=?,content=?,file1=?"
-	         		+ "  where num=? ")       ;
+	 
+	 public List<Board> boardList(int pageInt, int limit, String boardid) throws UnsupportedEncodingException, SQLException {
+		 
+		 Connection conn = getConnection();
+         String sql = " select * from( "
+         		+ " select rownum rnum, a.* from ( "
+         		+ " select * from board where boardid = ? "
+         		+ " order by num desc) a) "
+         		+ " where rnum between ? and ? ";
+         PreparedStatement pstmt = conn.prepareStatement(sql);
+         pstmt.setString(1, boardid);// 분류
+         pstmt.setInt(2, (pageInt-1)*limit+1);// start  
+         pstmt.setInt(3, (pageInt*limit));// end    
+         
+		ResultSet rs = pstmt.executeQuery();
+		List<Board> li = new ArrayList<>();
+		while(rs.next()) {
+			Board m = new Board();
+			m.setNum(rs.getInt("num"));
+			m.setPass(rs.getString("pass"));
+			m.setName(rs.getString("name"));
+			m.setSubject(rs.getString("subject"));
+			m.setContent(rs.getString("content"));
+			m.setFile1(rs.getString("file1"));
+			m.setRegdate(rs.getDate("regdate"));
+			m.setReadcnt(rs.getInt("readcnt"));
+			m.setBoardid(rs.getString("boardid"));
+			
+			li.add(m);
+		}
+		return li;
+	 }
+public int boardCount(String boardid) throws UnsupportedEncodingException, SQLException {
+		 
+		 Connection conn = getConnection();       
+         PreparedStatement pstmt = conn.prepareStatement("select nvl (count(*),0) from board where boardid = ?");
+         pstmt.setString(1, boardid);
+ 		 ResultSet rs = pstmt.executeQuery();
+ 		 if(rs.next()) {
+ 			 return rs.getInt(1);
+ 		 }
+           return 0;
+}
+	 public Board oneBoard(int num) throws UnsupportedEncodingException, SQLException {
+		 
+        Connection conn = getConnection();         
+        PreparedStatement pstmt = conn.prepareStatement("select * from board where num = ?");				
+		pstmt.setInt(1, num);
+		ResultSet rs = pstmt.executeQuery();
+		Board m = new Board();
+		
+		if(rs.next()) {			
+			m.setNum(rs.getInt("num"));
+			m.setPass(rs.getString("pass"));
+			m.setName(rs.getString("name"));
+			m.setSubject(rs.getString("subject"));
+			m.setContent(rs.getString("content"));
+			m.setFile1(rs.getString("file1"));
+			m.setRegdate(rs.getDate("regdate"));
+			m.setReadcnt(rs.getInt("readcnt"));
+			m.setBoardid(rs.getString("boardid"));
+	 }
+		return m;
+}
+	 
+	  public int updateBoard(Board board) throws UnsupportedEncodingException, SQLException {
+	      	
+	      Connection conn = getConnection();        
+	         String sql = 
+	         "update board set name=?,subject=?,content=?,file1=?" + "where num =?";
+	          PreparedStatement pstmt = conn.prepareStatement(sql);
 	         //mapping
-	         pstmt.setString(1,board.getName());
-	         pstmt.setString(2,board.getSubject());
-	         pstmt.setString(3,board.getContent());
-	         pstmt.setString(4,board.getFile1());
-	         pstmt.setInt(5,board.getNum());
-	              //4)excute
-	         int num = pstmt.executeUpdate();
-	         return num;
+             pstmt.setString(1,board.getName());
+             pstmt.setString(2,board.getSubject());
+             pstmt.setString(3,board.getContent());
+             pstmt.setString(4,board.getFile1());             
+             pstmt.setInt(5,board.getNum());
+             //4)excute
+             int num = pstmt.executeUpdate();
+             return num;
 	                  
 	   }
-   
-   
-   
+	  
+	  public int boardDelete(int num) throws UnsupportedEncodingException, SQLException {
+        	
+          Connection con = getConnection();
+          PreparedStatement pstmt = null;
+          String sql = "delete from board where num =?";    
+          pstmt = con.prepareStatement( sql );
+          pstmt.setInt(1,num);
+          return pstmt.executeUpdate();
+                      
+       }
 }

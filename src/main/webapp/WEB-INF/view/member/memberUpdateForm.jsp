@@ -4,11 +4,10 @@
     pageEncoding="UTF-8"%>
 <html lang="ko">
 <head>
-
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>회원정보 수정</title>
+<title>회원가입 화면 샘플 - Bootstrap</title>
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -40,36 +39,27 @@ body {
 </style>
 <script>
 function win_upload(){
-	var op = "width=500, height=150, left=50, top=150";
+	var op ="width=500, height=150, left=50, top= 150";
 	open("${pageContext.request.contextPath}/member/pictureimgForm","",op);
-	
-	
-	
+   
 }
-
 
 </script>
 </head>
-<%MemberDao md = new MemberDao();
-KicMember mem = md.oneMember(login);
-
-%>
-
-
-
-
 
 <body>
    <div class="container">
       <div class="input-form-backgroud row">
          <div class="input-form col-md-12 mx-auto">
             <h4 class="mb-3">회원정보수정</h4>
-            <form class="validation-form" novalidate      action="memberUpdatePro" method="post" name="f">
-               <input type="hidden" name="picture" value="">
-               <div class="row">
+            <form class="validation-form" novalidate  action="memberUpdatePro" method="post" name="f" >
+            <input type = "hidden" name = "picture" value="${mem.picture}">   
+                              <div class="row">
                   <div class="col-md-3 mb-3">
-                     <label for="id">사진</label> <img src="${pageContext.request.contextPath}/image/member/picture/${mem.picture }" width="100px"  height="120px" id="pic">
-                    <a   class="btn btn-primary  btn-block" href="javascript:win_upload()">사진업로드</a>
+                     <label for="id">사진</label> <img src="${pageContext.request.contextPath}/image/member/picture/${mem.picture}"
+                            width="100px"  height="120px" id ="pic">
+                     <a class="btn btn-primary  btn-block" href="javascript:win_upload()">사진업로드</a>
+                     
                   </div>
                   
                   <div class="col-md-9 mb-3">
@@ -77,59 +67,54 @@ KicMember mem = md.oneMember(login);
                   <div class="row">
                   <div class="col-md-6 mb-3">
                      <label for="id">아이디</label> <input type="text"
-                        class="form-control" id="id" placeholder="아이디" value="${mem.id }" readonly  name="id">
+                        class="form-control" id="id" placeholder="아이디" value="${mem.id}"
+                         readonly name="id">
                      <div class="invalid-feedback">아이디을 입력해주세요.</div>
                   </div>
                   <div class="col-md-6 mb-3">
                      <label for="name">이름</label> <input type="text"
-                        class="form-control" id="name" placeholder="" value="${mem.name }"   name="name"
+                        class="form-control" id="name" placeholder="" value="${mem.name}"   name="name"
                         required>
                      <div class="invalid-feedback">이름을 입력해주세요.</div>
                   </div>
-               </div>
-                
-               </div></div>
-               
+               </div>             
+               </div></div>            
                   <div class="row">
                   <div class="col-md-6 mb-3">
                      <label for="pass">비밀번호</label> <input type="password"
                         class="form-control" id="pass" placeholder="비밀번호" value="${mem.pass}" required  name="pass">
-                 <!--<div class="invalid-feedback">비밀번호을 입력해주세요.</div> -->
+                    <div class="invalid-feedback">비밀번호을 입력해주세요.</div> 
                   </div>
-                                </div>
+
+               </div>
                
                   <div class="row">
                   <div class="col-md-6 mb-3">
                      <label for="gender">남자</label> <input type="radio"
-                         id="gender"  value="1" ${mem.gender==1 ? "checked":" "} required  name="gender">
-                  
+                         id="gender"  value="1" ${mem.gender==1?"checked":" "}  
+                         name="gender">           
                   </div>
                   <div class="col-md-6 mb-3">
                      <label for="gender">여자</label> <input type="radio"
-                         id="gender" placeholder="" value="2" ${mem.gender==2 ? "checked":" "}  name="gender"
-                        required>
-                     
+                         id="gender" placeholder="" value="2" ${mem.gender==2?"checked":" "}    
+                         name="gender">          
                   </div>
-               </div>
-               
+               </div>      
                <div class="mb-3">
-                  <label for="email">이메일</label> <input type="email"  name="email" value="${mem.email }"
+                  <label for="email">이메일</label> <input type="email" name="email"
                      class="form-control" id="email" placeholder="you@example.com"
-                     required>
-                 
+                     required value="${mem.email}">
+                  
                </div>
                <div class="mb-3">
-                  <label for="tel">전화번호</label> <input type="text" value="${mem.tel }"
-                     class="form-control" id="tel" placeholder="전화번호"    name="tel"
-                     required>
+                  <label for="tel">전화번호</label> <input type="text"
+                     class="form-control" id="tel" placeholder="전화번호" name="tel"
+                     required value="${mem.tel}">
                   
                </div>   
-               
-               
-               
-               
-            
-               <button class="btn btn-primary btn-lg btn-block" type="submit">정보수정</button>
+                    
+               <button class="btn btn-primary btn-lg btn-block" type="submit">정보수정
+                  </button>
             </form>
          </div>
       </div>

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -37,10 +37,10 @@ body {
 </style>
 </head>
 <body>
-   <div class="container">
+	<div class="container">
   
   <form class="form-inline" action="${pageContext.request.contextPath}/member/picturePro"   
-  enctype="multipart/form-data" method ="post">
+  enctype="multipart/form-data" method= "post">
      
      <input type="file" class="form-control col-md-3 mb-3"  name="picture">
      <button type="submit" class="btn btn-primary col-md-3 mb-3">사진등록</button>

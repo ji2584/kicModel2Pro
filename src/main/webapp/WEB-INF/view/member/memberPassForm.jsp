@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>비밀번호변경 </title>
+<title>로그인</title>
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -36,22 +36,15 @@ body {
 }
 </style>
 <script>
-
-function passChk(form){
-	   alert(form.chgpass.value + ":" + form.chgpass1.value)
-	if(form.chgpass.value !==form.chgpass1.value){
+function passChk(form) {
+	if(form.chgpass.value !=form.chgpass1.value){
 		alert("변경 비밀번호와 재입력 번호가 다릅니다.")
 		form.chgpass1.value="";
 		form.chgpass1.focus()
 		return false
-		
 	}
 	return true;
-	
 }
-
-
-
 </script>
 </head>
 <body>
@@ -59,39 +52,34 @@ function passChk(form){
 		<div class="input-form-backgroud row">
 			<div class="input-form col-md-12 mx-auto">
 				<h4 class="mb-3  center">비밀번호변경</h4>
-				<form class="validation-form" novalidate      action="memberPassPro" onsubmit="return passChk(this)" method="post">
-				
+				<form class="validation-form" novalidate action="memberPassPro"
+				onsubmit = "return passChk(this)" method="post">
+
 					<div class="row">
 					
-					
-					
 						<div class="col-md-12 mb-3">
-						
 							<label for="pass">현재비밀번호</label> <input type="password"
-								class="form-control" id="id" placeholder="" value="" required  name="pass">
-							<div class="invalid-feedback">비밀번호를 입력해주세요</div>
+								class="form-control" id="pass" placeholder="" value=""
+								name="pass" required>
+							<div class="invalid-feedback">비밀번호을 입력해주세요.</div>
 						</div>
-												
 						
 						<div class="col-md-12 mb-3">
-						
 							<label for="pass">변경비밀번호</label> <input type="password"
-								class="form-control" id="pass" placeholder="" value=""   name="chgpass"
-								required>
-							<div class="invalid-feedback">비밀번호를 입력해주세요.</div>
+								class="form-control" id="pass" placeholder="" value=""
+								name="chgpass" required>
+							<div class="invalid-feedback">비밀번호을 입력해주세요.</div>
 						</div>
 						
 						<div class="col-md-12 mb-3">
-						
-							<label for="pass">변경 비밀번호 확인</label> <input type="password"
-								class="form-control" id="pass" placeholder="" value=""   name="chgpass1"
-								required>
-							<div class="invalid-feedback">비밀번호를 입력해주세요.</div>
-							
+							<label for="pass">변경번호확인</label> <input type="password"
+								class="form-control" id="pass" placeholder="" value=""
+								name="chgpass1" required>
+							<div class="invalid-feedback">비밀번호을 입력해주세요.</div>
 						</div>
 					</div>
-					
-					
+
+
 					<div class="mb-4"></div>
 					<button class="btn btn-primary btn-lg btn-block" type="submit">비밀번호 변경</button>
 				</form>

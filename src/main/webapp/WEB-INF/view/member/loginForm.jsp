@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -41,30 +41,31 @@ body {
 		<div class="input-form-backgroud row">
 			<div class="input-form col-md-12 mx-auto">
 				<h4 class="mb-3  center">로그인</h4>
-				<form class="validation-form" novalidate      action="loginPro">
-				
+				<form class="validation-form" novalidate action="loginPro">
+
 					<div class="row">
 						<div class="col-md-6 mb-3">
 							<label for="id">아이디</label> <input type="text"
-								class="form-control" id="id" placeholder="" value="" required  name="id">
+								class="form-control" id="id" placeholder="" value="" required
+								name="id">
 							<div class="invalid-feedback">아이디를 입력해주세요.</div>
 						</div>
 						<div class="col-md-6 mb-3">
 							<label for="pass">비밀번호</label> <input type="password"
-								class="form-control" id="pass" placeholder="" value=""   name="pass"
-								required> 
-							<div class="invalid-feedback">비밀번호를 입력해주세요.</div>
+								class="form-control" id="pass" placeholder="" value=""
+								name="pass" required>
+							<div class="invalid-feedback">비밀번호을 입력해주세요.</div>
 						</div>
 					</div>
-					
-					
+
+
 					<div class="mb-4"></div>
 					<button class="btn btn-primary btn-lg btn-block" type="submit">로그인</button>
 				</form>
 			</div>
 		</div>
 		<footer class="my-3 text-center text-small">
-			<p class="mb-1">&copy; 2023 YD</p>
+			<p class="mb-1">&copy; 2021 YD</p>
 		</footer>
 	</div>
 	<script> window.addEventListener('load', () => { const forms = document.getElementsByClassName('validation-form'); Array.prototype.filter.call(forms, (form) => { form.addEventListener('submit', function (event) { if (form.checkValidity() === false) { event.preventDefault(); event.stopPropagation(); } form.classList.add('was-validated'); }, false); }); }, false); </script>

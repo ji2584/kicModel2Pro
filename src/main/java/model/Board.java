@@ -3,37 +3,35 @@ package model;
 import java.util.Date;
 
 public class Board {
+		// TODO Auto-generated method stub
 		private int num;
 		private String name;
 		private String pass;
-	   private String subject;
-	   private String content; 
-	   private String file1;
-	   private Date  regdate ;
-	   private  int  readcnt ;
-	   private String boardid ;
-	   
-	   
-	   public int getNum() {
-		return num;
-	}
-	public void setNum(int num) {
-		this.num = num;
-	}
-	   public String getPass() {
+		private String subject;
+		private String content;
+		private String file1;
+		private Date regdate;
+		private int readcnt;
+		private String boardid;
+		public int getNum() {
+			return num;
+		}
+		public void setNum(int num) {
+			this.num = num;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public String getPass() {
 			return pass;
 		}
 		public void setPass(String pass) {
 			this.pass = pass;
 		}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public String getSubject() {
-		
+		public String getSubject() {
 			return subject;
 		}
 		public void setSubject(String subject) {
@@ -76,8 +74,4 @@ public class Board {
 					+ boardid + "]";
 		}
 		
-		
-		
-		
-	   
-}
+	}

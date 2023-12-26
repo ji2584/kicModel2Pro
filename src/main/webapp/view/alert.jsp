@@ -8,9 +8,8 @@
 </head>
 <body>
 <script>
-alert("${msg }")
-location.href="${pageContext.request.contextPath}${url }"
+alert("${msg}")
+location.href="${pageContext.request.contextPath}${url}"
 </script>
-
 </body>
 </html>

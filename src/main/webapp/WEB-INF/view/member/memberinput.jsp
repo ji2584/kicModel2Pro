@@ -37,11 +37,9 @@ body {
 </style>
 <script>
 function win_upload(){
-	var op = "width=500, height=150, left=50, top=150";
+	var op ="width=500, height=150, left=50, top= 150";
 	open("${pageContext.request.contextPath}/member/pictureimgForm","",op);
-	
-	
-	
+   
 }
 
 
@@ -53,12 +51,12 @@ function win_upload(){
       <div class="input-form-backgroud row">
          <div class="input-form col-md-12 mx-auto">
             <h4 class="mb-3">회원가입</h4>
-            <form class="validation-form" novalidate      action="memberPro"   method="post" name="f">
-            <input type="hidden" name="picture">
+            <form class="validation-form" novalidate action="memberPro" method="post" name="f">
+            <input type = "hidden" name = "picture">
                <div class="row">
                   <div class="col-md-3 mb-3">
                      <label for="id">사진</label> <img src=""  width="100px"  height="120px" id="pic">
-                     <a   class="btn btn-primary  btn-block" href="javascript:win_upload()">사진업로드</a>
+                     <a class="btn btn-primary  btn-block" href="javascript:win_upload()">사진업로드</a>
                   </div>
                   <div class="col-md-9 mb-3">
                   <div class="row">
