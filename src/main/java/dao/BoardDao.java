@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Board;
+import model.Comment;
 import model.KicMember;
 
 public class BoardDao {
@@ -145,4 +146,34 @@ public int boardCount(String boardid) throws UnsupportedEncodingException, SQLEx
           return pstmt.executeUpdate();
                       
        }
+	  
+	  public int insertComment(String comment, int num) throws UnsupportedEncodingException, SQLException {
+        	
+          Connection con = getConnection();
+          PreparedStatement pstmt = null;
+          String sql = "insert into boardcomment values (boardcomseq.nextval,?,?,sysdate)";    
+          pstmt = con.prepareStatement( sql );
+          pstmt.setInt(1,num);
+          pstmt.setString(2,comment);
+          return pstmt.executeUpdate();
+                      
+       }
+
+	public List<Comment> commentList(int num) throws SQLException {
+		 Connection con = getConnection();
+         PreparedStatement pstmt =
+        		 con.prepareStatement("select * from boardcomment where num=? order by regdate desc");
+         pstmt.setInt(1, num);
+         ResultSet rs = pstmt.executeQuery();
+         List<Comment> i = new ArrayList<Comment>();
+         while(rs.next()) {
+        	 Comment c = new Comment();
+        	 c.setNum(rs.getInt("num"));
+        	 c.setContent(rs.getString("content"));
+        	 i.add(c);
+        	 
+         }
+         return i;
+	}
+
 }

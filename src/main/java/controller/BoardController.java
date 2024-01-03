@@ -17,6 +17,7 @@ import dao.MemberDao;
 import kic.mskim.MskimRequestMapping;
 import kic.mskim.RequestMapping;
 import model.Board;
+import model.Comment;
 import model.KicMember;
 
 @WebServlet("/board/*")
@@ -82,15 +83,10 @@ public class BoardController extends MskimRequestMapping {
 		
 		//board session 처리한다.		
 		if(req.getParameter("boardid")!=null) { //? boardid = 3
-			session.setAttribute("boardid", req.getParameter("boardid"));
-			session.setAttribute("pageNum","1");
-		
-		
-		
-		}		
+			session.setAttribute("boardid", req.getParameter("boardid"));}
+		    session.setAttribute("pageNum", "1");
 		
 		String boardid = (String) session.getAttribute("boardid");
-		
 		if(boardid==null) boardid = "1";
 		String boardName = "";
 		switch(boardid) {
@@ -102,16 +98,13 @@ public class BoardController extends MskimRequestMapping {
 			break;
 		case "3":
 			boardName = "QnA";
-			break; 
+			break;
 		}
 		//page 설정
-		if(req.getParameter("pageNum")!=null) { //? boardid = 3
-			session.setAttribute("pageNum", req.getParameter("pageNum"));}	
+		if(req.getParameter("pageNum")!=null) { 
+			session.setAttribute("pageNum", req.getParameter("pageNum"));}
 		
-		
-		
-		
-		String pageNum = (String)session.getAttribute("pageNum");
+		String pageNum = (String) session.getAttribute("pageNum");
 		if(pageNum == null) pageNum ="1";
 		
 		int limit = 3; //한페이장 게시글 갯수
@@ -123,21 +116,24 @@ public class BoardController extends MskimRequestMapping {
 		List<Board> li = bd.boardList(pageInt,limit,boardid);
 		
 		//pagging
-		int bottomLine = 3;
-		int start= (pageInt -1)/bottomLine * bottomLine+1;//1,2,3->1 ,4,5,6->4
-		int end = start + bottomLine-1;
-		int maxPage = (boardCount/limit)+ (boardCount%limit == 0?0:1);
-		if (end>maxPage)	end=maxPage;
+		int bottomLine =3;
+		int start = (pageInt-1)/bottomLine * bottomLine +1; //1,2,3->1 ,,4,5,6->4
+		int end = start + bottomLine -1;
+		int maxPage = (boardCount/limit) + (boardCount % limit ==0?0:1);
+		if (end > maxPage)
+			end = maxPage;
+				
 		req.setAttribute("bottomLine", bottomLine);
 		req.setAttribute("start", start);
 		req.setAttribute("end", end);
 		req.setAttribute("maxPage", maxPage);
 		req.setAttribute("pageInt", pageInt);
 		
-		
 		req.setAttribute("li", li);
 		req.setAttribute("boardName", boardName);
 		req.setAttribute("boardCount", boardCount);
+		
+		
 		
 		return "/WEB-INF/view/board/boardList.jsp";
 }
@@ -148,6 +144,9 @@ public class BoardController extends MskimRequestMapping {
 		int num = Integer.parseInt(req.getParameter("num"));
 		
 		Board board = bd.oneBoard(num);
+		List<Comment> commentLi=bd.commentList(num);
+		
+		req.setAttribute("commentLi", commentLi);
 		
 		req.setAttribute("board", board);
 		
@@ -218,25 +217,44 @@ public class BoardController extends MskimRequestMapping {
 		return "/WEB-INF/view/board/boardDeleteForm.jsp";
 }
 	
-	@RequestMapping("boardDeletePro") 
+	@RequestMapping("boardDeletePro")
 	public String boardDeletePro(HttpServletRequest req, HttpServletResponse res) throws Exception {
 		// TODO Auto-generated method stub
 		int num = Integer.parseInt(req.getParameter("num"));
 		Board board = bd.oneBoard(num);
-		String msg = "삭제 불가합니다.";
+		String msg = "삭제 불가합니다";
 		String url = "/board/boardDeleteForm?num="+num;
-		if(board.getPass().equals(req.getParameter("pass"))) {
+		if (board.getPass().equals(req.getParameter("pass"))) {
 			int count = bd.boardDelete(num);
-			if(count>0) {
-				msg = "게시글이 삭제 되었습니다.";
+			if (count>0) {
+				msg = "게시글이 삭제 되었습니다";
 				url = "/board/boardList";
 			}
+			
 		} else {
-			msg = "비밀번호를 확인하세요.";			
-		}		
-			req.setAttribute("msg", msg);
-			req.setAttribute("url", url);
-		return "/WEB-INF/view/alert.jsp";
-}
+			msg = "비밀번호 확인하세요";
+		}
+		req.setAttribute("msg", msg);
+		req.setAttribute("url", url);
+		return "/WEB-INF/view/alert.jsp";	
+		
+	}
+	
+	@RequestMapping("boardCommentPro") 
+	public String boardCommentPro(HttpServletRequest req, HttpServletResponse res) throws Exception {
+		// TODO Auto-generated method stub
+		/*
+		 * req.setAttribute("comment", req.getParameter("comment"));
+		 * req.setAttribute("boardnum", req.getParameter("boardnum"));
+		 */
+		String comment = req.getParameter("comment");
+		int boardnum = Integer.parseInt(req.getParameter("boardnum"));
+		bd.insertComment( comment,boardnum);
+		Comment c= new Comment();
+		c.setNum(boardnum);
+		c.setContent(comment);
+		req.setAttribute("c", c);
+		return "/single/boardCommentPro.jsp";
+	}
 }
 

@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="container">
-  <h2 class ="text-center">${boardName}{${boardCount}}</h2>
+  <h2 class ="text-center">${boardName}[${boardCount}]</h2>
    <p  class="text-right"> <a class="btn btn-primary"  href="boardForm">게시판입력</a></p>               
   <table class="table table-bordered">
     <thead>
@@ -34,17 +34,17 @@
       </c:forEach>  
     </tbody>
   </table>
-	<ul class="pagination justify-content-center text-center">
- 	 <li class="page-item <c:if test="${start<=bottomLine}"> disabled  </c:if> ">
- 	   <a class="page-link" href="${pageContext.request.contextPath}/board/boardList?pageNum=${start-bottomLine}">Previous</a></li>
+  <ul class="pagination justify-content-center text-center">
+  <li class="page-item <c:if test="${start<=bottomLine}"> disabled  </c:if> ">
+    <a class="page-link" href="${pageContext.request.contextPath}/board/boardList?pageNum=${start-bottomLine}">Previous</a></li>
   
-  	<c:forEach var = "p" begin ="${start}" end="${end}">
+  <c:forEach var = "p" begin ="${start}" end="${end}">
  
-  	<li class="page-item <c:if test="${pageInt==p}"> active  </c:if>"><a class="page-link" 
+  <li class="page-item <c:if test="${pageInt==p}"> active  </c:if>"><a class="page-link" 
        href="${pageContext.request.contextPath}/board/boardList?pageNum=${p}">${p}</a></li>
-  	</c:forEach>
+  </c:forEach>
  
-  <li class="page-item  <c:if test="${end>=maxPage}"> disabled  </c:if>"><a class="page-link" href="${pageContext.request.contextPath}/board/boardList?pageNum=${start+bottomLine}">Next</a></li>
+  <li class="page-item <c:if test="${end>=maxPage}"> disabled  </c:if>"> <a class="page-link" href="${pageContext.request.contextPath}/board/boardList?pageNum=${start+bottomLine}">Next</a></li>
 </ul>
 </div>
 </body>

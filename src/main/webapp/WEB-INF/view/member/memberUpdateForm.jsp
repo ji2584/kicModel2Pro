@@ -46,7 +46,6 @@ function win_upload(){
 
 </script>
 </head>
-
 <body>
    <div class="container">
       <div class="input-form-backgroud row">
