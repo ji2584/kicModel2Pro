@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import com.oreilly.servlet.MultipartRequest;
 
 import dao.MemberDao;
+import dao.MemberMybatisDao;
 import kic.mskim.Login;
 import kic.mskim.MskimRequestMapping;
 import kic.mskim.RequestMapping;
@@ -19,7 +20,7 @@ import model.KicMember;
 
 @WebServlet("/member/*")
 public class MemberController extends MskimRequestMapping {
-	 
+	 MemberMybatisDao md = new MemberMybatisDao();
 	HttpSession session;
 	
 	@Override
@@ -60,7 +61,7 @@ public class MemberController extends MskimRequestMapping {
 	@Login(key = "id")  //login확인 "id"
 	@RequestMapping("memberinfo")
 	public String memberinfo(HttpServletRequest request, HttpServletResponse res) throws Exception {	
-		MemberDao md = new MemberDao();
+		
 		
 		String login = (String) session.getAttribute("id");
 		KicMember mem = md.oneMember(login);
@@ -72,7 +73,7 @@ public class MemberController extends MskimRequestMapping {
 	public String loginPro(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String id = request.getParameter("id");
 		String pass = request.getParameter("pass");
-		MemberDao md = new MemberDao();
+		
 		KicMember mem = md.oneMember(id);
 		
 		HttpSession session=request.getSession();
@@ -111,9 +112,9 @@ public class MemberController extends MskimRequestMapping {
 		kicmem.setGender(gender);
 		kicmem.setTel(tel);
 		kicmem.setEmail(email);
-		kicmem.setPicture(picture);
+		kicmem.setPicture(picture); 
 
-		MemberDao md = new MemberDao();
+		
 		System.out.println(kicmem);
 		int num = md.insertMember(kicmem);
 		
@@ -130,7 +131,7 @@ public class MemberController extends MskimRequestMapping {
 	public String memberUpdateForm(HttpServletRequest request, HttpServletResponse res) throws Exception {
 		
 		String login =  (String) session.getAttribute("id");
-		MemberDao md = new MemberDao();
+		
 		KicMember mem = md.oneMember(login);
 		
 		request.setAttribute("mem", mem);		
@@ -152,7 +153,7 @@ public class MemberController extends MskimRequestMapping {
 		mem.setEmail(request.getParameter("email"));
 		mem.setPicture(request.getParameter("picture"));
 
-		MemberDao md = new MemberDao();
+		
 		KicMember memdb = md.oneMember(login);  //db에서 넘어온자료
 
 		String msg = "수정 되지 않았습니다.";
@@ -183,7 +184,7 @@ public class MemberController extends MskimRequestMapping {
 		
 		String login =  (String) session.getAttribute("id");
 	String pass = request.getParameter("pass");
-	MemberDao md = new MemberDao();
+	
 	KicMember memdb = md.oneMember(login);
 	String msg = "탈퇴되지 않았습니다.";
 	String url ="/member/memberDeleteForm";
@@ -217,7 +218,7 @@ public class MemberController extends MskimRequestMapping {
 	String pass = request.getParameter("pass");
 	String chgpass = request.getParameter("chgpass");
 
-	MemberDao md = new MemberDao();
+	
 	KicMember memdb = md.oneMember(login);
 
 	String msg = "비밀번호 수정을 실패 했습니다.";
